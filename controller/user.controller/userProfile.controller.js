@@ -3,13 +3,13 @@ const sendResponse = require("../../shared/sendResponse");
 const httpStatus = require("http-status");
 
 const getUserProfile = async (req, res, next) => {
-    try{
-        const {user} = req;
+    try {
+        const { user } = req;
         const userProfile = await UserProfileService.getUserProfile(user.email);
-        sendResponse(res,httpStatus.OK,true,"User profile fetched successfully",userProfile)
+        sendResponse(res, httpStatus.OK, true, "User profile fetched successfully", userProfile)
 
     }
-    catch(err){
+    catch (err) {
         next(err)
     }
 
