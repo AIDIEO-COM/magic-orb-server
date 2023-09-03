@@ -38,6 +38,4 @@ app.use("/", (req, res) => {
 
 app.use(globalErrorHandler);
 
-module.exports = {
-    app
-};
+module.exports = app
