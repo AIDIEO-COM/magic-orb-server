@@ -8,6 +8,19 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
+const getChatByAuthenticatedId = async (req, res, next) => {
+    try {
+        // user information
+        const { user } = req;
+        const userId = user.id;
+
+        const chats = await Chat.findOne({ user: userId });
+        sendResponse(res, httpStatus.CREATED, true, "Chat retrived successfully", chats)
+    } catch (error) {
+        next(error)
+    }
+}
+
 const createChat = async (req, res, next) => {
     try {
 
@@ -93,9 +106,9 @@ const createChat = async (req, res, next) => {
                 }
             }
 
-            sendResponse(res, httpStatus.CREATED, true, "Chat generated successfully", resData)
+            sendResponse(res, httpStatus.CREATED, true, "Chat generated successfully", resData);
         } else {
-            throw new ApiError(httpStatus.BAD_REQUEST, 'Reques failed with magic orb!')
+            throw new ApiError(httpStatus.BAD_REQUEST, 'Reques failed with magic orb!');
         }
     } catch (err) {
         next(err)
@@ -104,14 +117,5 @@ const createChat = async (req, res, next) => {
 
 module.exports.ChatController = {
     createChat,
+    getChatByAuthenticatedId,
 }
-
-// initial first message
-// {
-//     "message": [
-//         {
-//             "role": "user",
-//             "content": "Hello Magic Orb"
-//         }
-//     ]
-// }

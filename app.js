@@ -3,18 +3,8 @@ require('dotenv').config();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const globalErrorHandler = require('./middlewares/globalErrorHandler');
-// const { Configuration, OpenAIApi } = require('openai');
-
 
 const app = express();
-
-// const config = new Configuration({
-//     apiKey: process.env.OPENAI_API_KEY,
-// })
-// organization: process.env.ORG_ID,
-
-// const OpenAI = new OpenAIApi(config);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())

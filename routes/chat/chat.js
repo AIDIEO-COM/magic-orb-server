@@ -6,6 +6,7 @@ const router = express.Router();
 
 // BASE URL: /api/v1/chat
 
+router.get("/", auth, ChatController.getChatByAuthenticatedId);
 router.post("/", auth, ChatController.createChat);
 
 module.exports = router;
