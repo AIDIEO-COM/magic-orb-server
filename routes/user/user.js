@@ -19,5 +19,17 @@ router.get(
     UserController.getUser
 );
 
+router.patch(
+    "/:userId",
+    auth(Constants.ENUM_USER_ROLE.ADMIN),
+    UserController.updateUser
+);
+
+router.delete(
+    "/:userId",
+    auth(Constants.ENUM_USER_ROLE.ADMIN),
+    UserController.deleteUser
+);
+
 
 module.exports = router;

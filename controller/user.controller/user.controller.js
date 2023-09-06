@@ -16,7 +16,21 @@ const getUser = catchAsync(
         sendResponse(res, httpStatus.OK, true, "User retrived successfully", result)
     })
 
+const updateUser = catchAsync(
+    async (req, res) => {
+        const result = await UserService.updateUserService({ userId: req.params.userId, updataData: req.body });
+        sendResponse(res, httpStatus.OK, true, "User updated successfully", result)
+    })
+
+const deleteUser = catchAsync(
+    async (req, res) => {
+        const result = await UserService.deleteUserService(req.params.userId);
+        sendResponse(res, httpStatus.OK, true, "User deleted successfully", result)
+    })
+
 module.exports.UserController = {
     getAllUsers,
     getUser,
+    updateUser,
+    deleteUser
 }
