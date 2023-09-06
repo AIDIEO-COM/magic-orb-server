@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { Constants } = require('../configs/constant');
 require('dotenv').config();
 
 const UserSchema = new mongoose.Schema({
@@ -23,8 +24,11 @@ const UserSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ["user", "admin"],
-        default: "user"
+        enum: {
+            values: [Constants.ENUM_USER_ROLE.USER, Constants.ENUM_USER_ROLE.ADMIN],
+            message: `Status value can not be {VALUE}, must be ${Constants.ENUM_USER_ROLE.USER}/${Constants.ENUM_USER_ROLE.ADMIN}`
+        },
+        default: Constants.ENUM_USER_ROLE.USER
     },
     profilePicture: {
         type: String,
@@ -37,7 +41,6 @@ const UserSchema = new mongoose.Schema({
     balance: {
         type: Number,
         default: 0,
-
     },
     firstName: {
         type: String,
@@ -50,13 +53,11 @@ const UserSchema = new mongoose.Schema({
     country: {
         type: String,
         default: ""
-
     },
     acceptNewsLetter: {
         type: Boolean,
         default: false
     },
-
 }, {
     timestamps: true,
     toJSON: { virtuals: true },
