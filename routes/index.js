@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.use("/user", require("./user"));
 router.use("/chat", require("./chat"));
+router.use("/tool", require("./tool"));
 
 
 module.exports = router;
