@@ -13,5 +13,11 @@ router.get(
     UserController.getAllUsers
 );
 
+router.get(
+    "/:userId",
+    auth(Constants.ENUM_USER_ROLE.ADMIN),
+    UserController.getUser
+);
+
 
 module.exports = router;

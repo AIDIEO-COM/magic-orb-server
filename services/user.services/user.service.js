@@ -13,6 +13,12 @@ const getAllUsersService = async () => {
     return data;
 }
 
+const getUserService = async (userId) => {
+    const data = await User.findById(userId);
+    return data;
+}
+
 module.exports.UserService = {
     getAllUsersService,
+    getUserService,
 }
