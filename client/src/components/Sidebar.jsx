@@ -90,11 +90,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <NavLink to="/">
           {/* <img src={Logo} alt="Logo" /> */}
-          <h1 className="text-base font-bold text-white md:text-4xl">
-            BOCS ADMIN
+          <h1 className="text-base font-bold text-white md:text-xl lg:text-2xl">
+            MAGIC ORB ADMIN
           </h1>
         </NavLink>
-
+        {/* hsoiahdas */}
         <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
