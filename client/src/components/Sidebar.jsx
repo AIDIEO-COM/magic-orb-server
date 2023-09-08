@@ -3,12 +3,6 @@ import { NavLink, useLocation } from 'react-router-dom';
 // import Logo from '../images/logo/logo.svg';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { AiOutlineBars } from 'react-icons/ai';
-// import PropTypes from 'prop-types';
-
-// Sidebar.propTypes = {
-//   sidebarOpen: PropTypes.bool.isRequired,
-//   setSidebarOpen: PropTypes.func.isRequired,
-// };
 
 const sidebarMenuItems = [
   {
@@ -189,7 +183,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 }`}
                             >
                               <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                                {item.children.map((child, index) => {
+                                {item.children.map((child) => {
                                   return (
                                     <li key={child.path}>
                                       <NavLink
