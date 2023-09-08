@@ -6,9 +6,16 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Users from "./pages/users/Users";
 import AddUser from "./pages/users/AddUser";
 import DefaultLayout from "./layout/DefaultLayout";
+import useAuthCheck from "./hooks/useAuthCheck";
 
 
 function App() {
+
+  // authentication checking
+  const authChecked = useAuthCheck();
+
+  console.log(authChecked, 'check');
+
   const [loading, setLoading] = useState(true);
 
   const preloader = document.getElementById("preloader");
@@ -27,7 +34,7 @@ function App() {
 
   return loading ? (
     <p className=" text-center text-danger">Failed to lead app</p>
-  ) : (
+  ) : !authChecked ? <div className='text-center'>Checking authentication....</div> : (
 
     <Routes>
 

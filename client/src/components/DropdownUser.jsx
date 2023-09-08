@@ -1,15 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-// import UserOne from '../images/user/user-01.png';
-// import useAuth from '../hooks/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { userLoggedOut } from '../redux-rtk/features/auth/authSlice';
 
 const DropdownUser = () => {
+
+  // global
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  // states
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // const navigate = useNavigate();
+
   const trigger = useRef(null);
   const dropdown = useRef(null);
-  // const {setAuth} = useAuth();
+
 
   // close on click outside
   useEffect(() => {
@@ -27,12 +33,6 @@ const DropdownUser = () => {
     return () => document.removeEventListener('click', clickHandler);
   });
 
-
-  const signOut = () => {
-    // console.log("clicked")
-    // localStorage.removeItem("token");
-    // navigate("/login")
-  }
   // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
@@ -42,6 +42,11 @@ const DropdownUser = () => {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
+
+  const handleLogout = () => {
+    dispatch(userLoggedOut());
+    navigate('/login');
+  }
 
   return (
     <div className="relative">
@@ -53,7 +58,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Welcome Admin
+            Welcome {auth?.user?.username}
           </span>
           <span className="block text-xs"></span>
         </span>
@@ -116,7 +121,7 @@ const DropdownUser = () => {
           </li>
           <li>
             <button
-              onClick={signOut}
+              onClick={() => handleLogout()}
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg

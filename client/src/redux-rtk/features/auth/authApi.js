@@ -31,7 +31,7 @@ export const authApi = apiSlice.injectEndpoints({
         // login endpoint here
         login: builder.mutation({
             query: (data) => ({
-                url: 'signin',
+                url: 'user/auth/admin/login',
                 method: 'POST',
                 body: data
             }),
@@ -40,15 +40,17 @@ export const authApi = apiSlice.injectEndpoints({
 
                     const result = await queryFulfilled;
 
+                    console.log(result.data);
+
                     // setting logged data to redux state
                     dispatch(userLoggedIn({
-                        accessToken: result.data.data.accessToken,
+                        accessToken: result.data.data.token,
                         _id: result.data.data.user._id,
                         user: result.data.data.user,
                     }));
 
                     // setting cookies
-                    Cookies.set('accessToken', result.data.data.accessToken, { expires: arg.rememberMe ? 30 : 1 });
+                    Cookies.set('accessToken', result.data.data.token, { expires: arg.rememberMe ? 30 : 1 });
                     Cookies.set('_id', result.data.data.user._id, { expires: arg.rememberMe ? 30 : 1 });
                     toast.success(result.data.message);
                 } catch (error) {
@@ -59,7 +61,7 @@ export const authApi = apiSlice.injectEndpoints({
 
         // get profile endpoint here
         getProfile: builder.query({
-            query: () => `profile`,
+            query: () => `user/profile`,
             providesTags: ['Profile'],
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
@@ -74,4 +76,8 @@ export const authApi = apiSlice.injectEndpoints({
     })
 });
 
-export const { useSignupMutation, useLoginMutation, useGetProfileQuery } = authApi;
+export const {
+    useSignupMutation,
+    useLoginMutation,
+    useGetProfileQuery
+} = authApi;

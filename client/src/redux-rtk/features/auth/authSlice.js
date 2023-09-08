@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import Cookies from 'js-cookie';
 
-
-
 const initialState = {
     accessToken: undefined,
     user: undefined,
