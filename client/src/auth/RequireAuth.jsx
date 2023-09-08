@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { loginUrl } from "../configs/constants";
 
 const RequireAuth = () => {
 
@@ -10,7 +11,7 @@ const RequireAuth = () => {
     return (
         auth?.isAuthenticated
             ? <Outlet />
-            : <Navigate to="/login" state={{ from: location.pathname }} replace />
+            : <Navigate to={loginUrl} state={{ from: location.pathname }} replace />
     )
 }
 

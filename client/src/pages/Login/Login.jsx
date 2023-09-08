@@ -10,6 +10,7 @@ import LoadingIcon from '../../icons/LoadingIcon';
 import { cx } from '../../hooks/helpers';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from "react-router-dom";
+import { dashboardUrl } from "../../configs/constants";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -21,7 +22,7 @@ const Login = () => {
   // globals
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from.pathname || "/dashboard";
+  const from = location.state?.from.pathname || dashboardUrl;
 
   const auth = useSelector((state) => state.auth);
   const [login, { isLoading, isSuccess }] = useLoginMutation();

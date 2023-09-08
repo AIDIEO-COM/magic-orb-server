@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { profileLog, userLoggedIn, userLoggedOut } from '../redux-rtk/features/auth/authSlice';
+import { userLoggedIn, userLoggedOut } from '../redux-rtk/features/auth/authSlice';
 
 export default function useAuthCheck() {
 
