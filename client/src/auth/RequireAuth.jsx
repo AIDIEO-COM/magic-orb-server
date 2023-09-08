@@ -1,19 +1,17 @@
+import { useSelector } from "react-redux";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-// import { Navigate, Outlet, useLocation } from 'react-router-dom'
-// import useAuth from '../hooks/useAuth'
+const RequireAuth = () => {
 
-const RequireAuth = ({ children }) => {
+    // globals
+    const location = useLocation()
+    const auth = useSelector((state) => state.auth);
 
-    // const {auth} = useAuth();
-    // const location = useLocation()
-
-    return (<></>
-        // auth?.token 
-        // ? <Outlet/>
-        // : <Navigate to="/login" state={{from: location.pathname}} replace/>
+    return (
+        auth?.isAuthenticated
+            ? <Outlet />
+            : <Navigate to="/login" state={{ from: location.pathname }} replace />
     )
-
-
 }
 
 export default RequireAuth

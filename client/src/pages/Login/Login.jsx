@@ -9,7 +9,7 @@ import { useLoginMutation } from '../../redux-rtk/features/auth/authApi';
 import LoadingIcon from '../../icons/LoadingIcon';
 import { cx } from '../../hooks/helpers';
 import { useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -18,38 +18,32 @@ const loginSchema = Yup.object().shape({
 
 const Login = () => {
 
-  // const { auth, setAuth } = useAuth();
-  // console.log(auth)
+  // globals
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const from = location.state?.from.pathname || "/dashboard";
+  const location = useLocation();
+  const from = location.state?.from.pathname || "/dashboard";
 
   const auth = useSelector((state) => state.auth);
   const [login, { isLoading, isSuccess }] = useLoginMutation();
 
   const { control, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(loginSchema) });
-  // const { control, handleSubmit, formState: { errors }, setValue, getValues } = useForm({
-  //   resolver: yupResolver(loginSchema),
-  // });
 
-
-
+  // handle login
   const onSubmit = (data) => {
-    console.log(data);
     login(data)
   };
 
   // if api call success then redirect to dashboard
   useEffect(() => {
     if (isSuccess) {
-      navigate('/dashboard')
+      navigate(from)
     }
   }, [isSuccess, navigate])
 
   // if authenticated then redirect to dashboard
   useEffect(() => {
     if (auth.isAuthenticated) {
-      navigate('/dashboard')
+      navigate(from)
     }
   }, [auth.isAuthenticated, navigate])
 

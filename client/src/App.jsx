@@ -7,6 +7,7 @@ import Users from "./pages/users/Users";
 import AddUser from "./pages/users/AddUser";
 import DefaultLayout from "./layout/DefaultLayout";
 import useAuthCheck from "./hooks/useAuthCheck";
+import RequireAuth from "./auth/RequireAuth";
 
 
 function App() {
@@ -14,8 +15,7 @@ function App() {
   // authentication checking
   const authChecked = useAuthCheck();
 
-  console.log(authChecked, 'check');
-
+  // states
   const [loading, setLoading] = useState(true);
 
   const preloader = document.getElementById("preloader");
@@ -42,12 +42,12 @@ function App() {
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login />} />
 
-      {/* <Route element={<RequireAuth />}> */}
-      <Route path="/dashboard" element={<DefaultLayout><Dashboard /></DefaultLayout>} />
+      <Route element={<RequireAuth />}>
+        <Route path="/dashboard" element={<DefaultLayout><Dashboard /></DefaultLayout>} />
 
-      <Route path="/users" element={<DefaultLayout><Users /></DefaultLayout>} />
-      <Route path="/add-user" element={<DefaultLayout><AddUser /></DefaultLayout>} />
-      {/* </Route> */}
+        <Route path="/users" element={<DefaultLayout><Users /></DefaultLayout>} />
+        <Route path="/add-user" element={<DefaultLayout><AddUser /></DefaultLayout>} />
+      </Route>
 
       {/* catch all routes */}
       <Route path="*" element={<NotFoundPage />} />
