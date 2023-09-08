@@ -2,12 +2,15 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
+
 const globalErrorHandler = require('./middlewares/globalErrorHandler');
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
+app.use(morgan("dev"));
 
 // connect to database
 mongoose.connect(process.env.DB_URL).then(() => {

@@ -44,7 +44,8 @@ const AdminloginUserService = async ({ email, password }) => {
             _id: user._id,
             id: user._id,
             email: user.email,
-            role: user.role
+            role: user.role,
+            username: user.username,
         },
         token
     };
