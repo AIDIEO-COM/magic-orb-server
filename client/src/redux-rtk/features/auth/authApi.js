@@ -40,8 +40,6 @@ export const authApi = apiSlice.injectEndpoints({
 
                     const result = await queryFulfilled;
 
-                    console.log(result.data);
-
                     // setting logged data to redux state
                     dispatch(userLoggedIn({
                         accessToken: result.data.data.token,
