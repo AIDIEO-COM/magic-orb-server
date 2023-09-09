@@ -1,7 +1,7 @@
 import React from "react";
 import { cx } from "../hooks/helpers";
 
-const Textarea = ({ label, type, icon, error, ...props }) => {
+const Textarea = ({ label, type, icon, error, value, ...props }) => {
     return (
         <div className="relative">
             <label className="mb-2.5 block font-medium text-black dark:text-white">
@@ -14,6 +14,7 @@ const Textarea = ({ label, type, icon, error, ...props }) => {
                         error ? "border-meta-1 focus:border-meta-1" : "border-stroke",
                         "dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary resize-none"
                     )}
+                    value={value}
                     {...props}
                 />
                 {icon && (
