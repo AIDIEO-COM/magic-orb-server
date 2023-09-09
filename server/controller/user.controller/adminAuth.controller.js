@@ -15,8 +15,6 @@ const loginAdmin = catchAsync(
         const { email, password } = req.body;
         const { user, token } = await AdminAuthService.AdminloginUserService({ email, password });
 
-        console.log(user);
-
         sendResponse(
             res,
             httpStatus.OK,

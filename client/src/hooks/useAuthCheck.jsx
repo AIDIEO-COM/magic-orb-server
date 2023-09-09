@@ -2,10 +2,14 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { userLoggedIn, userLoggedOut } from '../redux-rtk/features/auth/authSlice';
+import decode from 'jwt-decode'
+import { useNavigate } from 'react-router-dom';
+import { loginUrl } from '../configs/constants';
 
 export default function useAuthCheck() {
 
     // global and states
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [authChecked, setAuthChecked] = useState(false);
 
@@ -15,6 +19,15 @@ export default function useAuthCheck() {
         const _id = Cookies.get('_id');
 
         if (accessToken && _id) {
+
+            const decodedToken = decode(accessToken);
+
+            // if token expires
+            if (decodedToken.exp * 1000 < new Date().getTime) {
+                dispatch(userLoggedOut())
+                navigate(loginUrl);
+            }
+
             const headers = { Authorization: `Bearer ${accessToken}` };
 
             // getting logged user data
@@ -38,6 +51,7 @@ export default function useAuthCheck() {
                     console.error(error)
                     dispatch(userLoggedOut())
                     setAuthChecked(false);
+                    navigate(loginUrl);
                 });
         } else {
             setAuthChecked(true);

@@ -156,3 +156,12 @@ span.flatpickr-weekday,
 [x-cloak] {
   display: none !important;
 }
+
+/* tailwind classes */
+.f-center {
+  @apply flex justify-center items-center;
+}
+
+.trans {
+  @apply transition ease-in-out duration-300;
+}

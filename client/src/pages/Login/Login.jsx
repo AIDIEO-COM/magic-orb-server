@@ -59,7 +59,7 @@ const Login = () => {
               </h2>
 
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-4">
+                <div className="mb-5">
                   <Controller
                     name="email"
                     control={control}
@@ -72,6 +72,7 @@ const Login = () => {
                         value={field.value}
                         onChange={field.onChange}
                         icon={<EmailIcon />}
+                        error={errors.email?.message}
                       />
                     )}
                   />
@@ -83,13 +84,14 @@ const Login = () => {
                     control={control}
                     render={({ field }) => (
                       <Input
-                        label="password"
+                        label="Password"
                         id="password"
                         type="password"
                         placeholder="Password"
                         value={field.value}
                         onChange={field.onChange}
                         icon={<PasswordLockIcon />}
+                        error={errors.password?.message}
                       />
                     )}
                   />

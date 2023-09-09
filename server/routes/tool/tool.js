@@ -7,6 +7,12 @@ const router = express.Router();
 
 // BASE URL: /api/v1/tool
 
+router.get(
+    "/default",
+    auth(Constants.ENUM_USER_ROLE.ADMIN),
+    ToolController.getMagicORBDefaultChat
+);
+
 router.post(
     "/default",
     auth(Constants.ENUM_USER_ROLE.ADMIN),

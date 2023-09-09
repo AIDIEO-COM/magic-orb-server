@@ -1,5 +1,10 @@
 const ORBDefaultMsg = require("../../models/ORBDefaultMsg");
 
+const getMagicORBDefaultChatService = async () => {
+    const datas = await ORBDefaultMsg.find();
+    return datas[0];
+}
+
 const UpdateORInsertORBDeafultChatService = async (content) => {
 
     let result;
@@ -22,5 +27,6 @@ const UpdateORInsertORBDeafultChatService = async (content) => {
 
 
 module.exports.ToolService = {
+    getMagicORBDefaultChatService,
     UpdateORInsertORBDeafultChatService
 }
