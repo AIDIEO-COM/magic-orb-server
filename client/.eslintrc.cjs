@@ -11,7 +11,7 @@ export default {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': 'off',
-    'no-unused-vars': 'warn', // You can use 'warn' or 'error' depending on your preference
+    'no-unused-vars': 'error', // You can use 'warn' or 'error' depending on your preference
     'react/jsx-no-undef': 'error',
   },
 }
