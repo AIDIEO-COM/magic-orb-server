@@ -1,22 +1,20 @@
 import Breadcrumb from '../../components/Breadcrumb';
-import { addUserUrl } from '../../configs/constants';
-import Button from '../../customComp/Button';
 import CardLayout from '../../customComp/ViewLayout/CardLayout';
 import { cx } from '../../hooks/helpers';
-import { useGetUsersQuery } from '../../redux-rtk/features/user/userApi';
+import { useDeleteUserMutation, useGetUsersQuery } from '../../redux-rtk/features/user/userApi';
 import DataTable from 'react-data-table-component';
 import { IoTrash, IoCogOutline } from "react-icons/io5";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import useDelete from '../../hooks/useDelete';
 
 const Users = () => {
 
-    // global
-    const navigate = useNavigate();
+    // hooks
+    const { sendDeleteRequest } = useDelete();
 
     // get users from rtk
     const { data: users, isLoading, isError, isSuccess } = useGetUsersQuery();
-
-    console.log(users);
+    const [deleteUser, { isLoading: deleteLoading }] = useDeleteUserMutation();
 
     // datas
     const columns = [
@@ -41,8 +39,6 @@ const Users = () => {
                 )}>
                 {row.role}
             </span>,
-            center: true
-            // maxWidth: '200px'
         },
         {
             name: 'Action',
@@ -56,9 +52,9 @@ const Users = () => {
                     </Link>
 
                     <button
-                        className='text-cancelled text-[24px] hover:text-danger trans'
-                    // disabled={row.email === 'admin@gmail.com'} 
-                    // onClick={() => handleDeleteUser(row._id)}
+                        className='text-cancelled text-[24px] hover:text-danger trans disabled:text-form-strokedark'
+                        disabled={deleteLoading}
+                        onClick={() => sendDeleteRequest(row._id, deleteUser)}
                     >
                         <IoTrash />
                     </button>
@@ -77,12 +73,6 @@ const Users = () => {
                 isError={isError}
                 isSuccess={isSuccess}
                 title={`Users (${users?.data?.meta?.count})`}
-            // isAddContent={<div className='flex justify-end'>
-            //     <Button
-            //         text='Add User'
-            //         onClick={() => navigate(addUserUrl)}
-            //     />
-            // </div>}
             >
 
                 <div className='mt-6'>
@@ -90,7 +80,7 @@ const Users = () => {
                         columns={columns}
                         data={users?.data?.datas}
                         highlightOnHover
-                        progressPending={isLoading}
+                        progressPending={isLoading || deleteLoading}
                         pagination
                         persistTableHead={true}
                     />

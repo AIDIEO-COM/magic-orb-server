@@ -23,13 +23,10 @@ const MagicORBForm = ({ content }) => {
         },
     });
 
-
     // handler
     const onSubmit = (updatedData) => {
-        console.log(updatedData);
         updateMagicORBChat(updatedData)
     }
-
 
     return (
         <div>

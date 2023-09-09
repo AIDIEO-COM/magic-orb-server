@@ -18,15 +18,18 @@ const getUserService = async (userId) => {
     return data;
 }
 
-const updateUserService = async ({ userId, updataData }) => {
+const updateUserService = async (userId, body) => {
 
     // checking is role available
     const user = await User.findById(userId);
     if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'Check is user available!');
 
+    console.log(userId);
+    console.log(body);
+
     // updating role
     const result = await User.findOneAndUpdate({ _id: userId }, {
-        $set: updataData
+        $set: body
     }, { runValidators: true, new: true })
 
     return result;
