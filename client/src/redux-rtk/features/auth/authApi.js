@@ -9,7 +9,7 @@ export const authApi = apiSlice.injectEndpoints({
         // register endpoint here
         signup: builder.mutation({
             query: (data) => ({
-                url: 'signup',
+                url: 'user/auth/admin/register',
                 method: 'POST',
                 body: data
             }),
@@ -17,11 +17,7 @@ export const authApi = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { queryFulfilled }) {
                 try {
                     const result = await queryFulfilled;
-                    if (result.data.success) {
-                        toast.success(result.data.message);
-                    } else {
-                        toast.error(result.data.message);
-                    }
+                    toast.success(result.data.message);
                 } catch (error) {
                     toast.error(error.error.data.message);
                 }

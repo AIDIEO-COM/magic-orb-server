@@ -2,7 +2,7 @@ import React from "react";
 import CircleLoading from "../icons/CircleLoading";
 import { cx } from "../hooks/helpers";
 
-const Button = ({ isLoading, text, classes }) => {
+const Button = ({ isLoading, text, classes, ...props }) => {
     return (
         <button
             type="submit"
@@ -14,6 +14,7 @@ const Button = ({ isLoading, text, classes }) => {
                 )
             }
             disabled={isLoading}
+            {...props}
         >
             {isLoading && <CircleLoading />}
 

@@ -9,17 +9,15 @@ const MagicORBUpdate = () => {
     const { data: chat, isLoading, isError, isSuccess } = useGetDefaultMagicORBChatQuery();
 
     return (
-        <div>
-            <CardLayout isLoading={isLoading} isError={isError} isSuccess={isSuccess} title='Update Magic ORB'>
+        <CardLayout isLoading={isLoading} isError={isError} isSuccess={isSuccess} title='Update Magic ORB'>
 
-                <div className='mt-6'>
-                    <MagicORBForm
-                        content={chat?.data.content}
-                    />
-                </div>
+            <div className='mt-6'>
+                <MagicORBForm
+                    content={chat?.data.content}
+                />
+            </div>
 
-            </CardLayout>
-        </div>
+        </CardLayout>
     )
 }
 

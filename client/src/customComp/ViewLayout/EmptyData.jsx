@@ -4,7 +4,7 @@ import { cx } from '../../hooks/helpers'
 const EmptyData = ({ height, errorMsg }) => {
     return (
         <div className={cx(
-            'f-center mt-8 cardLayout py-6 px-5',
+            'flex items-center justify-center mt-8 bg-primary-50 shadow-md rounded-md pt-6 pb-10 py-6 px-5',
             height ? 'h-[62vh]' : 'h-screen'
         )}
         >
