@@ -8,6 +8,7 @@ import AddUser from "./pages/users/AddUser";
 import DefaultLayout from "./layout/DefaultLayout";
 import useAuthCheck from "./hooks/useAuthCheck";
 import RequireAuth from "./auth/RequireAuth";
+import MagicORBUpdate from "./pages/Tools/MagicORB/MagicORBUpdate";
 
 
 function App() {
@@ -47,6 +48,13 @@ function App() {
 
         <Route path="/users" element={<DefaultLayout><Users /></DefaultLayout>} />
         <Route path="/add-user" element={<DefaultLayout><AddUser /></DefaultLayout>} />
+
+        <Route path="/tool">
+          <Route path="update-magic-orb" element={<DefaultLayout><MagicORBUpdate /></DefaultLayout>} />
+        </Route>
+
+
+
       </Route>
 
       {/* catch all routes */}

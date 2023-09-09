@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 // import Logo from '../images/logo/logo.svg';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import { AiOutlineBars } from 'react-icons/ai';
+import { AiOutlineBars, AiOutlineTool, AiOutlineUser } from 'react-icons/ai';
 
 const sidebarMenuItems = [
   {
@@ -18,7 +18,7 @@ const sidebarMenuItems = [
   },
   {
     title: 'Users',
-    icon: <AiOutlineBars />,
+    icon: <AiOutlineUser />,
     path: '/user',
     children: [
       {
@@ -28,6 +28,17 @@ const sidebarMenuItems = [
       {
         title: 'Add a User',
         path: '/add-user',
+      },
+    ],
+  },
+  {
+    title: 'Tools',
+    icon: <AiOutlineTool />,
+    path: '/tool',
+    children: [
+      {
+        title: 'Magic ORB',
+        path: '/tool/update-magic-orb',
       },
     ],
   },
