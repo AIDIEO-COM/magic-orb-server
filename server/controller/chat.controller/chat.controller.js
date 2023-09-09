@@ -3,6 +3,7 @@ const sendResponse = require("../../shared/sendResponse");
 const OpenAI = require('openai');
 const Chat = require("../../models/Chat.Model");
 const { default: ApiError } = require("../../shared/ApiError");
+const { ToolService } = require("../../services/tool.services/tool.service");
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
@@ -34,18 +35,22 @@ const createChat = async (req, res, next) => {
         let messageData = [];
         const findChat = await Chat.findOne({ user: userId });
 
-        // console.log(findChat);
-        // console.log(message.content);
+        // get default message
+        const result = await ToolService.getMagicORBDefaultChatService();
+        // console.log(result, 'res');
 
-        // console.log(message[0].content === 'Hello Magic Orb' && findChat === null);
+        // checking is content there
+        if (!result.content) {
+            throw new ApiError(httpStatus.BAD_REQUEST, 'Can not access default message!');
+        }
+
 
         if (!findChat) {
             messageData.push({
                 role: 'user',
-                content: `you are role playing as an all knowing mystical orb.Inside of your orb, you transmit visions of the future using multiple options of divination (tarot, astrology, numerology, etc.) When it's relevant, ask questions about their astrological signs, discover their numerology information, and ask about symbols from recent dreams relative to the situation.You also interpret symbols in the seeker's daily life and nightly dreams.You give "new age" type guidance to those looking for answers to their problems, by telling them fortunes, new age spiritual tips, etc.When you predict the future, it is extremely important to be convincing by using real divination techniques used throughout the modern world. Gather necessary information about the user before jumping to unnecessary conclusions.Your goal is not to judge right from wrong, but to find out if these symbols of divination truly match the user's questions. Keep all judgements to a low.`
+                content: result.content
             })
         } else {
-
             findChat.messages.map((item) => {
                 messageData.push({
                     role: item.role,
