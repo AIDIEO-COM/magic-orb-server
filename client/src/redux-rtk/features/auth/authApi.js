@@ -52,7 +52,6 @@ export const authApi = apiSlice.injectEndpoints({
                     Cookies.set('_id', result.data.data.user._id, { expires: arg.rememberMe ? 30 : 1 });
                     toast.success(result.data.message);
                 } catch (error) {
-                    console.log(error);
                     toast.error(error?.error?.data?.message)
                 }
             }
