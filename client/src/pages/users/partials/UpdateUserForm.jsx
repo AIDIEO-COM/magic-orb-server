@@ -12,7 +12,13 @@ const editUserSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
     phoneNo: Yup.string().required("Phone number is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string().min(6, "Password must be at least 6 characters long"),
+    password: Yup.string()
+        .test('min-length', 'Password must be at least 6 characters long', (value) => {
+            if (!value) {
+                return true;
+            }
+            return value.length >= 6;
+        }),
     country: Yup.string().required("Country is required"),
 });
 

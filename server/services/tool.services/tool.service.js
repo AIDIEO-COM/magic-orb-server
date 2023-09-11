@@ -1,7 +1,7 @@
-const ORBDefaultMsg = require("../../models/ORBDefaultMsg");
+const ORBDefault = require("../../models/ORBDefaultMsg");
 
 const getMagicORBDefaultChatService = async () => {
-    const datas = await ORBDefaultMsg.find();
+    const datas = await ORBDefault.find();
     return datas[0];
 }
 
@@ -10,16 +10,16 @@ const UpdateORInsertORBDeafultChatService = async (content) => {
     let result;
 
     // checking is role available
-    const getORBDefaultMsg = await ORBDefaultMsg.find();
+    const getORBDefault = await ORBDefault.find();
 
-    if (getORBDefaultMsg.length > 0) {
+    if (getORBDefault.length > 0) {
         // updating role
-        result = await ORBDefaultMsg.findOneAndUpdate({ _id: getORBDefaultMsg[0]._id }, {
+        result = await ORBDefault.findOneAndUpdate({ _id: getORBDefault[0]._id }, {
             $set: content
         }, { runValidators: true, new: true })
     } else {
         // creating default message
-        result = await ORBDefaultMsg.create(content);
+        result = await ORBDefault.create(content);
     }
 
     return result;

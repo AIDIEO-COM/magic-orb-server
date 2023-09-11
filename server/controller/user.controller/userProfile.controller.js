@@ -15,7 +15,6 @@ const getUserProfile = async (req, res, next) => {
 
 }
 
-
 module.exports.UserProfileController = {
     getUserProfile
 }
