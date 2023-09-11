@@ -3,9 +3,9 @@ const { ToolService } = require("../../services/tool.services/tool.service");
 const catchAsync = require("../../shared/catchAsync");
 const sendResponse = require("../../shared/sendResponse");
 
-const getMagicORBDefaultChat = catchAsync(
+const getMagicORBDefault = catchAsync(
     async (req, res) => {
-        const result = await ToolService.getMagicORBDefaultChatService();
+        const result = await ToolService.getMagicORBDefaultService();
         sendResponse(res, httpStatus.OK, true, "Defaults retrived successfully", result)
     })
 
@@ -32,7 +32,7 @@ const UpdateDefaultOtherFields = catchAsync(
     })
 
 module.exports.ToolController = {
-    getMagicORBDefaultChat,
+    getMagicORBDefault,
     UpdateORInsertORBDeafultChat,
     UpdateDefaultOtherFields,
 }

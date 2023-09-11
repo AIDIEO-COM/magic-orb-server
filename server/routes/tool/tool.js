@@ -10,7 +10,7 @@ const router = express.Router();
 router.get(
     "/default",
     auth(Constants.ENUM_USER_ROLE.ADMIN),
-    ToolController.getMagicORBDefaultChat
+    ToolController.getMagicORBDefault
 );
 
 router.post(
