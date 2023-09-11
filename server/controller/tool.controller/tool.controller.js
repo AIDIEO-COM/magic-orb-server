@@ -26,6 +26,7 @@ const UpdateORInsertORBDeafultChat = catchAsync(
 */
 const UpdateDefaultOtherFields = catchAsync(
     async (req, res) => {
+        console.log(req.body, 'dd');
         const result = await ToolService.UpdateDefaultOtherFieldsService(req.params.defaultId, req.body);
         sendResponse(res, httpStatus.OK, true, "Defaults updated successfully", result)
     })

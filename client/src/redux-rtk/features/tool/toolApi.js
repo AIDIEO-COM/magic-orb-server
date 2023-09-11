@@ -8,7 +8,7 @@ export const toolApi = apiSlice.injectEndpoints({
         getDefaultMagicORBChat: builder.query({
             query: () => 'tool/default',
             keepUnusedDataFor: 600,
-            providesTags: ['DefaultChat'],
+            providesTags: ['DefaultMagicORB'],
             async onQueryStarted(arg, { queryFulfilled }) {
                 try {
                     await queryFulfilled;
@@ -26,7 +26,7 @@ export const toolApi = apiSlice.injectEndpoints({
                 body: updateData,
             }),
             invalidatesTags: (arg) => [
-                'DefaultChat',
+                'DefaultMagicORB',
             ],
             async onQueryStarted(arg, { queryFulfilled }) {
                 try {
@@ -38,81 +38,30 @@ export const toolApi = apiSlice.injectEndpoints({
             }
         }),
 
-        // // get role endpoint here
-        // getRole: builder.query({
-        //     query: (roleId) => `role/${roleId}`,
-        //     providesTags: (result, error, arg) => [{
-        //         type: 'Role', id: arg
-        //     }],
-        //     async onQueryStarted(arg, { queryFulfilled }) {
-        //         try {
-        //             await queryFulfilled;
-        //         } catch (error: any) {
-        //             // toast.error(error?.error?.data?.message);
-        //             console.log(error?.error?.data?.message)
-        //         }
-        //     }
-        // }),
-
-        // // create new role endpoint here
-        // createRole: builder.mutation({
-        //     query: (data) => ({
-        //         url: 'role',
-        //         method: 'POST',
-        //         body: data
-        //     }),
-        //     invalidatesTags: ["Roles"],
-        //     async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        //         try {
-        //             const result = await queryFulfilled;
-        //             toast.success(result.data.message);
-        //         } catch (error: any) {
-        //             toast.error(error.error.data.message);
-        //         }
-        //     }
-        // }),
-
-        // // updating role data
-        // updateRole: builder.mutation({
-        //     query: ({ roleId, updateData }) => ({
-        //         url: `role/${roleId}`,
-        //         method: 'PATCH',
-        //         body: updateData,
-        //     }),
-        //     invalidatesTags: (result, error, arg) => [
-        //         'Roles',
-        //         { type: 'Role', id: arg.roleId }
-        //     ],
-        //     async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        //         try {
-        //             const result = await queryFulfilled;
-        //             toast.success(result.data.message);
-        //         } catch (error: any) {
-        //             toast.error(error.error.data.message);
-        //         }
-        //     }
-        // }),
-
-        // deleteRole: builder.mutation({
-        //     query: (roleId) => ({
-        //         url: `role/${roleId}`,
-        //         method: 'DELETE',
-        //     }),
-        //     invalidatesTags: ['Roles'],
-        //     async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        //         try {
-        //             const result = await queryFulfilled;
-        //             toast.success(result.data.message);
-        //         } catch (error: any) {
-        //             toast.error(error.error.data.message);
-        //         }
-        //     }
-        // }),
-
+        // updating default others
+        updateMagicORBOthersDefault: builder.mutation({
+            query: ({ defaultId, updatedData }) => ({
+                url: `tool/default/${defaultId}`,
+                method: 'PATCH',
+                body: updatedData,
+            }),
+            invalidatesTags: (arg) => [
+                'DefaultMagicORB',
+            ],
+            async onQueryStarted(arg, { queryFulfilled }) {
+                try {
+                    const result = await queryFulfilled;
+                    toast.success(result.data.message);
+                } catch (error) {
+                    toast.error(error.error.data.message);
+                }
+            }
+        }),
     })
 });
 
 export const {
     useGetDefaultMagicORBChatQuery,
     useUpdateMagicORBChatMutation,
+    useUpdateMagicORBOthersDefaultMutation
 } = toolApi;

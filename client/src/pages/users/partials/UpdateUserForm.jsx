@@ -42,7 +42,6 @@ const UpdateUserForm = ({ data, userId }) => {
 
     // handler
     const onSubmit = (updatedData) => {
-        console.log(updatedData);
         updateUser({
             userId, updatedData, headers: {
                 'Content-Type': 'application/json',
