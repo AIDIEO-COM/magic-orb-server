@@ -19,4 +19,10 @@ router.post(
     ToolController.UpdateORInsertORBDeafultChat
 );
 
+router.patch(
+    "/default/:defaultId",
+    auth(Constants.ENUM_USER_ROLE.ADMIN),
+    ToolController.UpdateDefaultOtherFields
+);
+
 module.exports = router;
