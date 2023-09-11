@@ -16,7 +16,7 @@ const getChatByAuthenticatedId = async (req, res, next) => {
         const userId = user.id;
 
         const chats = await Chat.findOne({ user: userId });
-        sendResponse(res, httpStatus.CREATED, true, "Chat retrived successfully", chats)
+        sendResponse(res, httpStatus.CREATED, true, "Chat retrived successfully", chats ? chats : [])
     } catch (error) {
         next(error)
     }
@@ -36,11 +36,10 @@ const createChat = async (req, res, next) => {
         const findChat = await Chat.findOne({ user: userId });
 
         // get default message
-        const result = await ToolService.getMagicORBDefaultChatService();
-        // console.log(result, 'res');
+        const magicORBDefaultData = await ToolService.getMagicORBDefaultService();
 
         // checking is content there
-        if (!result.content) {
+        if (!magicORBDefaultData.content) {
             throw new ApiError(httpStatus.BAD_REQUEST, 'Can not access default message!');
         }
 
@@ -48,25 +47,46 @@ const createChat = async (req, res, next) => {
         if (!findChat) {
             messageData.push({
                 role: 'user',
-                content: result.content
+                content: magicORBDefaultData.content
             })
         } else {
-            findChat.messages.map((item) => {
-                messageData.push({
-                    role: item.role,
-                    content: item.content
+            // console.log(findChat);
+
+            if (findChat.isPrompt === true) {
+                findChat.messages.map((item, index) => {
+                    messageData.push({
+                        role: item.role,
+                        content: item.content
+                    })
+
+                    // Check if it's the second-to-last item
+                    if (index === findChat.messages.length - 2) {
+                        messageData.push({
+                            role: 'user',
+                            content: magicORBDefaultData.content
+                        });
+                    }
                 })
-            })
+            } else {
+                findChat.messages.map((item) => {
+                    messageData.push({
+                        role: item.role,
+                        content: item.content
+                    })
+                })
+            }
         }
 
-        // console.log(messageData, 'msg data');
+        const createData = [
+            ...messageData,
+            ...message,
+        ]
+
+        // console.log(createData, 'create');
 
         const completion = await openai.chat.completions.create({
-            messages: [
-                ...messageData,
-                ...message,
-            ],
-            model: 'gpt-3.5-turbo',
+            messages: createData,
+            model: magicORBDefaultData.gptVersion ? magicORBDefaultData.gptVersion : 'gpt-3.5-turbo',
         });
 
 
@@ -99,6 +119,19 @@ const createChat = async (req, res, next) => {
             if (!findChat || findChat === null) {
                 resData = new Chat(data);
                 await resData.save();
+            } else if (findChat.isPrompt === true) {
+                updatedDoc = await Chat.updateOne({ user: userId }, {
+                    $push: {
+                        messages: data.messages
+                    },
+                    $set: {
+                        isPrompt: false
+                    }
+                }, { new: true })
+
+                if (updatedDoc.acknowledged && updatedDoc.modifiedCount === 1) {
+                    resData = await Chat.findOne({ user: userId });
+                }
             } else {
                 updatedDoc = await Chat.updateOne({ user: userId }, {
                     $push: {

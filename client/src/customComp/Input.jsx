@@ -1,18 +1,20 @@
 import { cx } from "../hooks/helpers"
 
-const Input = ({ label, type, icon, error, ...props }) => {
+const Input = ({ classes, label, type, icon, error, ...props }) => {
     return (
         <div className="relative">
-            <label className="mb-2.5 block font-medium text-black dark:text-white">
+            {label && <label className="mb-2.5 block font-medium text-black dark:text-white">
                 {label}
-            </label>
+            </label>}
+
             <div className="relative">
 
                 <input
                     type={type ? type : 'text'}
                     className={cx(
+                        classes,
                         error ? "border-meta-1 focus:border-meta-1" : "border-stroke focus:border-primary",
-                        "w-full rounded-lg border  bg-transparent py-4 pl-6 pr-10 outline-none  focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                        "w-full rounded-lg border bg-transparent py-4 pl-6 pr-10 outline-none focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     )}
                     {...props}
                 />

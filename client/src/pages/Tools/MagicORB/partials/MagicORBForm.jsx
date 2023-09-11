@@ -29,7 +29,7 @@ const MagicORBForm = ({ content }) => {
     }
 
     return (
-        <div>
+        <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Controller
                     name="content"
@@ -54,7 +54,7 @@ const MagicORBForm = ({ content }) => {
                 </div>
 
             </form>
-        </div>
+        </>
     )
 }
 
