@@ -24,9 +24,6 @@ const updateUserService = async (userId, body) => {
     const user = await User.findById(userId);
     if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'Check is user available!');
 
-    console.log(userId);
-    console.log(body);
-
     // updating role
     const result = await User.findOneAndUpdate({ _id: userId }, {
         $set: body
