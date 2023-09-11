@@ -3,11 +3,10 @@ import CardLayout from '../../../customComp/ViewLayout/CardLayout'
 import { useGetDefaultMagicORBChatQuery } from '../../../redux-rtk/features/tool/toolApi';
 import MagicORBForm from './partials/MagicORBForm';
 import OtherFieldsFrom from './partials/OtherFieldsFrom';
-import { cx } from '../../../hooks/helpers';
 import Button from '../../../customComp/Button';
 
-const tabClass = 'bg-bodydark2'
-const tabActiveClass = 'bg-meta-5'
+const tabClass = '!bg-bodydark2'
+const tabActiveClass = '!bg-meta-5'
 
 const MagicORBUpdate = () => {
 
