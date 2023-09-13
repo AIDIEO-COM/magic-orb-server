@@ -10,10 +10,10 @@ const router = express.Router();
 router.post(
     "/tarot",
     auth(Constants.ENUM_USER_ROLE.ADMIN),
-    upload.fields([
-        { name: 'frontImg', maxCount: 1 },
-        { name: 'backImg', maxCount: 1 },
-    ]),
+    // upload.fields([
+    //     { name: 'frontImg', maxCount: 1 },
+    //     { name: 'backImg', maxCount: 1 },
+    // ]),
     TarotController.CreateTarot
 );
 
