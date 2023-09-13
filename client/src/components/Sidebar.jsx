@@ -40,6 +40,14 @@ const sidebarMenuItems = [
         title: 'Magic ORB',
         path: '/tool/update-magic-orb',
       },
+      {
+        title: 'Tarot',
+        path: '/tool/tarot',
+      },
+      {
+        title: 'Add Tarot Card',
+        path: '/tool/add-tarot',
+      },
     ],
   },
 ];

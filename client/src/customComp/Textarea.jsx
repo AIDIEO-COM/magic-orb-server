@@ -7,7 +7,7 @@ const Textarea = ({ label, type, icon, error, value, ...props }) => {
             <label className="mb-2.5 block font-medium text-black dark:text-white">
                 {label}
             </label>
-            <div className="relative">
+            <div className="">
                 <textarea
                     className={cx(
                         "w-full rounded-lg border bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary",
@@ -22,7 +22,7 @@ const Textarea = ({ label, type, icon, error, value, ...props }) => {
                 )}
             </div>
             {error && (
-                <span className="text-xs ml-1 text-meta-1 absolute bottom-0 left-0">
+                <span className="text-xs ml-1 text-meta-1 absolute -bottom-2.5 left-0">
                     {error}
                 </span>
             )}

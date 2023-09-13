@@ -11,6 +11,6 @@ export const apiSlice = createApi({
             return headers;
         }
     }),
-    tagTypes: ['Users', 'User', 'Profile', 'DefaultMagicORB'],
+    tagTypes: ['Users', 'User', 'Profile', 'DefaultMagicORB', "Tarots", "Tarot"],
     endpoints: () => ({}),
 })
