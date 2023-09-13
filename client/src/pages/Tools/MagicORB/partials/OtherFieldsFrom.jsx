@@ -9,31 +9,29 @@ import { RxCrossCircled } from 'react-icons/rx'
 import { AiFillPlusCircle } from 'react-icons/ai'
 import { useUpdateMagicORBOthersDefaultMutation } from '../../../../redux-rtk/features/tool/toolApi';
 import toast from 'react-hot-toast';
+import SelectCustom from '../../../../customComp/SelectCustom';
+import { cx } from '../../../../hooks/helpers';
 
-const orbOtherDefSchema = Yup.object().shape({
-    gptVersion: Yup.string().required("Version field is required"),
-});
+export const gptVersions = [
+    { _id: 'xyz', label: 'Select GPT version', value: '' },
+    { _id: "gpt-3.5-turbo", label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
+    { _id: "gpt-4", label: "gpt-4", value: "gpt-4" },
+]
 
 const OtherFieldsFrom = ({ data }) => {
 
     // update rtk
     const [updateMagicORBOthersDefault, { isLoading }] = useUpdateMagicORBOthersDefaultMutation();
 
-    // globals
-    const { control, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(orbOtherDefSchema),
-        defaultValues: {
-            gptVersion: data.gptVersion,
-        },
-    });
-
     // states
     const [newFilterItem, setNewFilterItem] = useState('');
     const [filterFields, setFilterFields] = useState([]);
+    const [selectGPTVersion, setSelectGPTVersion] = useState(gptVersions[0])
 
     // setting api filter data
     useEffect(() => {
-        setFilterFields(data.filterFields)
+        setFilterFields(data.filterFields);
+        setSelectGPTVersion(gptVersions.find((item) => item.value === data.gptVersion))
     }, [data])
 
     // adding and removing filter field
@@ -53,15 +51,22 @@ const OtherFieldsFrom = ({ data }) => {
     }
 
     // handler
-    const onSubmit = (formData) => {
+    const onSubmit = (e) => {
+        e.preventDefault();
 
         if (filterFields.length === 0) {
-            toast.error('Please add atleast one item to filter field!s')
+            toast.error('Please add atleast one item to filter fields!');
+            return;
+        }
+
+        if (selectGPTVersion?.value === '') {
+            toast.error('Please select GPT version!');
+            return;
         }
 
         const updatedData = {
             filterFields,
-            gptVersion: formData.gptVersion
+            gptVersion: selectGPTVersion.value
         }
 
         updateMagicORBOthersDefault({
@@ -73,20 +78,17 @@ const OtherFieldsFrom = ({ data }) => {
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Controller
-                    name="gptVersion"
-                    control={control}
-                    render={({ field }) => (
-                        <Input
-                            rows={7}
-                            label="Chat GPT version"
-                            onChange={field.onChange}
-                            error={errors.gptVersion?.message}
-                            value={field.value}
-                            placeholder="Please enter chat gpt version message"
-                        />
-                    )}
+            <form onSubmit={onSubmit}>
+
+                <SelectCustom
+                    value={selectGPTVersion}
+                    defaultValue={selectGPTVersion}
+                    onChange={(option) => setSelectGPTVersion(option)}
+                    options={gptVersions}
+                    label='Select GPT Version'
+                    placeHolder='Select GPT Version'
+                    required
+                // error={error.city}
                 />
 
                 <div className='mt-4'>
@@ -95,22 +97,25 @@ const OtherFieldsFrom = ({ data }) => {
                         Filterable Fields
                     </p>
 
-                    <ul className='my-4 space-y-4'>
+                    <ul className={cx(
+                        'my-4 ',
+                        filterFields.length && 'flex flex-wrap gap-x-3 gap-y-4'
+                    )}>
                         {!filterFields.length ? <div className='flex items-center justify-center text-danger'>No items are there.</div> : <>
                             {filterFields.map((item, index) => (
                                 <li
                                     key={`fieldF${index}`}
-                                    className='flex items-center justify-between gap-x-1 border border-dashed p-2 text-[20px]'
+                                    className='flex items-center w-max gap-x-1 border border-dashed px-2 py-1 text-[16px] font-medium'
                                 >
                                     <div className='flex items-center'>
-                                        <BsArrowRightShort className='text-[28px]' />
+                                        <BsArrowRightShort className='text-[26px]' />
                                         <span className='text-black'>{item}</span>
                                     </div>
 
 
                                     <div className='flex items-center'>
                                         <button
-                                            className='text-danger ml-6'
+                                            className='text-danger ml-4'
                                             onClick={() => handleRemoveFilterFieldItem(index)}
                                         >
                                             <RxCrossCircled />
