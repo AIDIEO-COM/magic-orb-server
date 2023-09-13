@@ -23,6 +23,9 @@ mongoose.connect(process.env.DB_URL).then(() => {
 
 app.use("/api/v1/", require("./routes/index"));
 
+// files route
+app.use('/public', express.static('public'))
+
 app.use("/", (req, res) => {
     res.send("Hello World")
 })

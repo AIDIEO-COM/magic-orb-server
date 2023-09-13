@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from "yup";
 import Button from '../../../../customComp/Button';
 import Input from '../../../../customComp/Input';
 import { BsArrowRightShort } from 'react-icons/bs'

@@ -10,6 +10,8 @@ import useAuthCheck from "./hooks/useAuthCheck";
 import RequireAuth from "./auth/RequireAuth";
 import MagicORBUpdate from "./pages/Tools/MagicORB/MagicORBUpdate";
 import EditUser from "./pages/users/EditUser";
+import Tarot from "./pages/Tools/Tarot/Tarot";
+import AddTarot from "./pages/Tools/Tarot/AddTarot";
 
 
 function App() {
@@ -53,6 +55,9 @@ function App() {
 
         <Route path="/tool">
           <Route path="update-magic-orb" element={<DefaultLayout><MagicORBUpdate /></DefaultLayout>} />
+
+          <Route path="tarot" element={<DefaultLayout><Tarot /></DefaultLayout>} />
+          <Route path="add-tarot" element={<DefaultLayout><AddTarot /></DefaultLayout>} />
         </Route>
 
 
